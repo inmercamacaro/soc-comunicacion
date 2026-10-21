@@ -136,9 +136,6 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 .screen.active .choices .choice:nth-child(1){animation-delay:.5s}
 .screen.active .choices .choice:nth-child(2){animation-delay:.62s}
 .screen.active .choices .choice:nth-child(3){animation-delay:.74s}
-.lockNote{margin-top:14px;color:var(--amber);font-size:.92rem;font-weight:700;letter-spacing:.03em}
-.quiz.deny{animation:shakeX .45s ease}
-#btnNext.locked{opacity:.45}
 .choice.correct{animation:pulseOk .55s ease !important;opacity:1 !important}
 .choice.wrong{animation:shakeX .45s ease !important;opacity:1 !important}
 .feedback.show{animation:riseIn .5s cubic-bezier(.22,.8,.28,1) both}
@@ -511,28 +508,14 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
   var bar=document.getElementById('progress');
   var cur=0;
   function frags(s){return [].slice.call(s.querySelectorAll('.frag'));}
-  var answered={};
-  function screenQuiz(s){ return s.querySelector('[data-quiz]'); }
-  function isLocked(i){
-    var s=screens[i]; if(!s) return false;
-    return !!screenQuiz(s) && !answered[i];
-  }
-  function deny(){
-    var q=screenQuiz(screens[cur]);
-    if(q){ q.classList.remove('deny'); void q.offsetWidth; q.classList.add('deny'); }
-  }
   function render(){
     screens.forEach(function(s,i){ s.classList.toggle('active',i===cur); });
     folio.textContent=String(cur+1).padStart(2,'0')+' / '+String(screens.length).padStart(2,'0');
     bar.style.width=((cur+1)/screens.length*100)+'%';
     document.getElementById('btnPrev').style.visibility=cur===0?'hidden':'visible';
     document.getElementById('btnNext').style.visibility=cur===screens.length-1?'hidden':'visible';
-    document.getElementById('btnNext').classList.toggle('locked', isLocked(cur));
   }
-  function next(){
-    if(isLocked(cur)){ deny(); return; }
-    if(cur<screens.length-1){cur++; render();}
-  }
+  function next(){ if(cur<screens.length-1){cur++; render();} }
   function prev(){ if(cur>0){cur--; render();} }
   function toggleFull(){
     if(document.fullscreenElement){ document.exitFullscreen(); }
@@ -559,15 +542,11 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
     if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next();}
     else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev();}
     else if(e.key==='Home'){e.preventDefault();cur=0;render();}
-    else if(e.key==='End'){e.preventDefault();var t=screens.length-1;for(var i=cur+1;i<screens.length;i++){ if(isLocked(i)){ t=i; break; } }cur=t;render();}
+    else if(e.key==='End'){e.preventDefault();cur=screens.length-1;render();}
     else if(e.key==='f'||e.key==='F'){toggleFull();}
   });
   document.querySelectorAll('[data-quiz]').forEach(function(q){
     var fb=q.querySelector('.feedback');
-    var note=document.createElement('div');
-    note.className='lockNote';
-    note.textContent='Para continuar, primero elige una opción.';
-    q.appendChild(note);
     q.querySelectorAll('.choice').forEach(function(btn){
       btn.addEventListener('click',function(){
         var ok=btn.getAttribute('data-correct')==='1';
@@ -575,10 +554,6 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
         btn.classList.add(ok?'correct':'wrong');
         if(!ok){q.querySelectorAll('.choice').forEach(function(b){if(b.getAttribute('data-correct')==='1'){b.classList.add('correct');}});}
         fb.classList.add('show');
-        var sc=q.closest('.screen');
-        answered[screens.indexOf(sc)]=true;
-        note.style.display='none';
-        render();
       });
     });
   });
