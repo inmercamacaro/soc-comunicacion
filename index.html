@@ -91,6 +91,51 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 .ctrl.primary{background:var(--amber);color:#241a0c;border-color:var(--amber)}
 .ctrl.primary:hover{background:var(--amber2)}
 #hint{color:var(--muted);font-size:.85rem}
+
+/* ===== MOTION GRAPHICS ===== */
+@keyframes riseIn{from{opacity:0;transform:translateY(30px);filter:blur(7px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes slideL{from{opacity:0;transform:translateX(-46px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideR{from{opacity:0;transform:translateX(46px)}to{opacity:1;transform:translateX(0)}}
+@keyframes photoSettle{from{transform:scale(1.09)}to{transform:scale(1)}}
+@keyframes kenburns{from{transform:scale(1) translateY(0)}to{transform:scale(1.09) translateY(-1.6%)}}
+@keyframes pulseOk{0%{transform:scale(1)}35%{transform:scale(1.035)}100%{transform:scale(1)}}
+@keyframes shakeX{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}45%{transform:translateX(6px)}70%{transform:translateX(-4px)}}
+@keyframes barGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes screenIn{from{opacity:0;transform:scale(.992)}to{opacity:1;transform:scale(1)}}
+.screen.active{animation:screenIn .45s ease both}
+.screen > *{opacity:0}
+.screen.photo img.bg{opacity:1}
+.screen.active > *{animation:riseIn .7s cubic-bezier(.22,.8,.28,1) forwards}
+.screen.active > *:nth-child(1){animation-delay:.06s}
+.screen.active > *:nth-child(2){animation-delay:.18s}
+.screen.active > *:nth-child(3){animation-delay:.30s}
+.screen.active > *:nth-child(4){animation-delay:.42s}
+.screen.active .frag{opacity:0;animation:none}
+.screen.active .frag{animation:riseIn .65s cubic-bezier(.22,.8,.28,1) forwards}
+.screen.active .frag:nth-child(1){animation-delay:.34s}
+.screen.active .frag:nth-child(2){animation-delay:.46s}
+.screen.active .frag:nth-child(3){animation-delay:.58s}
+.screen.active .frag:nth-child(4){animation-delay:.70s}
+.screen.active .frag:nth-child(5){animation-delay:.82s}
+.screen.active .frag:nth-child(6){animation-delay:.94s}
+.screen.active .frag:nth-child(7){animation-delay:1.06s}
+.screen.active .frag:nth-child(8){animation-delay:1.18s}
+.screen.active img.side{animation:photoSettle 1.5s cubic-bezier(.22,.8,.28,1) both}
+.screen.photo.active img.bg{animation:kenburns 26s ease-in-out infinite alternate}
+.screen.active .versus .vcol:first-child{animation:slideL .8s cubic-bezier(.22,.8,.28,1) .35s both}
+.screen.active .versus .vcol:last-child{animation:slideR .8s cubic-bezier(.22,.8,.28,1) .5s both}
+.screen.active .split img.side{animation-delay:.15s}
+#progress{transition:width .6s cubic-bezier(.22,.8,.28,1)}
+.screen.active .choices .choice{opacity:0;animation:riseIn .55s cubic-bezier(.22,.8,.28,1) forwards}
+.screen.active .choices .choice:nth-child(1){animation-delay:.5s}
+.screen.active .choices .choice:nth-child(2){animation-delay:.62s}
+.screen.active .choices .choice:nth-child(3){animation-delay:.74s}
+.choice.correct{animation:pulseOk .55s ease !important;opacity:1 !important}
+.choice.wrong{animation:shakeX .45s ease !important;opacity:1 !important}
+.feedback.show{animation:riseIn .5s cubic-bezier(.22,.8,.28,1) both}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01s !important;animation-delay:0s !important;transition-duration:.01s !important}
+}
 @media (max-width:760px){
   .split,.versus,.cards{grid-template-columns:1fr}
   .split img.side{height:30vh}
@@ -417,14 +462,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
   var cur=0;
   function frags(s){return [].slice.call(s.querySelectorAll('.frag'));}
   function render(){
-    screens.forEach(function(s,i){
-      var active=i===cur;
-      s.classList.toggle('active',active);
-      frags(s).forEach(function(f,j){
-        if(active){ f.style.transitionDelay=(j*0.11)+'s'; f.classList.add('on'); }
-        else { f.style.transitionDelay='0s'; f.classList.remove('on'); }
-      });
-    });
+    screens.forEach(function(s,i){ s.classList.toggle('active',i===cur); });
     folio.textContent=String(cur+1).padStart(2,'0')+' / '+String(screens.length).padStart(2,'0');
     bar.style.width=((cur+1)/screens.length*100)+'%';
     document.getElementById('btnPrev').style.visibility=cur===0?'hidden':'visible';
