@@ -18,7 +18,7 @@
 html,body{height:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden}
 #progress{position:fixed;top:0;left:0;height:4px;background:var(--amber);width:0;z-index:60;transition:width .45s ease}
-#topbar{position:fixed;top:0;left:0;right:0;z-index:55;display:flex;justify-content:space-between;align-items:center;padding:14px 22px;pointer-events:none}
+#topbar{position:fixed;top:0;left:0;right:0;z-index:55;display:flex;justify-content:space-between;align-items:center;padding:14px 22px;pointer-events:none;background:linear-gradient(180deg,rgba(20,16,12,.94) 55%,rgba(20,16,12,0))}
 #topbar .brand{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
 #folio{font-size:.85rem;color:var(--muted);font-weight:600;letter-spacing:.08em}
 .screen{position:fixed;inset:0;display:none;flex-direction:column;justify-content:safe center;padding:84px 6vw 110px;overflow-y:auto;scrollbar-width:none}
@@ -144,10 +144,10 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
   <h2>Ocho paradas, dos maneras de mirar</h2>
   <div class="route">
     <div class="route-item frag"><div class="num">01</div><div><b>La campaña</b> <span>— las piezas: el discurso de victoria y los eslóganes</span></div></div>
-    <div class="route-item frag"><div class="num">02</div><div><b>La fórmula de Lasswell</b> <span>— quién, dice qué, por qué canal, a quién, con qué efecto</span></div></div>
+    <div class="route-item frag"><div class="num">02</div><div><b>El funcionalismo</b> <span>— de qué trata la escuela y la fórmula de Lasswell</span></div></div>
     <div class="route-item frag"><div class="num">03</div><div><b>Descubre</b> <span>— ¿qué pregunta de Lasswell responde esto?</span></div></div>
     <div class="route-item frag"><div class="num">04</div><div><b>Las funciones de Wright</b> <span>— para qué sirve comunicar en masa</span></div></div>
-    <div class="route-item frag"><div class="num">05</div><div><b>La sospecha crítica</b> <span>— Adorno y Horkheimer, Pasquali, Martín-Barbero</span></div></div>
+    <div class="route-item frag"><div class="num">05</div><div><b>El enfoque crítico</b> <span>— de qué trata la escuela: Fráncfort, Pasquali, Martín-Barbero</span></div></div>
     <div class="route-item frag"><div class="num">06</div><div><b>Descubre</b> <span>— ¿cuál sí, cuál no?: funcionalismo o crítica</span></div></div>
     <div class="route-item frag"><div class="num">07</div><div><b>El contraste</b> <span>— lo que ve cada lectura de las mismas piezas</span></div></div>
     <div class="route-item frag"><div class="num">08</div><div><b>Síntesis</b> <span>— tres ideas para llevarse</span></div></div>
@@ -186,7 +186,19 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
   </div>
 </section>
 
-<!-- 05 · LASSWELL -->
+<!-- 05 · EL FUNCIONALISMO — DE QUÉ TRATA -->
+<section class="screen" data-title="El funcionalismo · de qué trata">
+  <div class="eyebrow">02 · El funcionalismo</div>
+  <h2>La comunicación como engranaje del sistema</h2>
+  <div class="steps">
+    <div class="step frag"><div class="n">1</div><div><h3>La idea de fondo</h3><p>La sociedad se entiende como un <b>sistema</b>: un conjunto de partes donde cada institución cumple una <b>función</b> que ayuda a mantener el equilibrio y la continuidad del conjunto.</p></div></div>
+    <div class="step frag"><div class="n">2</div><div><h3>Los medios en ese sistema</h3><p>Los medios de comunicación son un órgano más de ese cuerpo social: informan del entorno, interpretan lo que pasa, transmiten los valores comunes y entretienen. Sin esas funciones, el sistema se desintegra.</p></div></div>
+    <div class="step frag"><div class="n">3</div><div><h3>Su manera de preguntar</h3><p>El funcionalista no pregunta primero si un mensaje es bueno o malo; pregunta <b>cómo funciona</b>: quién lo emite, qué dice, por dónde viaja, a quién llega y <b>qué efecto produce</b>.</p></div></div>
+    <div class="step frag"><div class="n">4</div><div><h3>El autor de la fórmula</h3><p><b>Harold Lasswell</b> (1902–1978), politólogo estadounidense, estudió la propaganda de la Primera Guerra Mundial. En 1948 propuso resumir cualquier acto de comunicación en cinco preguntas: la fórmula que se construye en la siguiente pantalla.</p></div></div>
+  </div>
+</section>
+
+<!-- 06 · LASSWELL -->
 <section class="screen" data-title="La fórmula de Lasswell">
   <div class="eyebrow">02 · El funcionalismo — Lasswell (1948)</div>
   <h2>La fórmula se construye pregunta a pregunta</h2>
@@ -257,7 +269,19 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
   </div>
 </section>
 
-<!-- 08 · LA SOSPECHA CRÍTICA -->
+<!-- 09 · EL ENFOQUE CRÍTICO — DE QUÉ TRATA -->
+<section class="screen" data-title="El enfoque crítico · de qué trata">
+  <div class="eyebrow">05 · El enfoque crítico-estructuralista</div>
+  <h2>Los medios no flotan sobre la sociedad</h2>
+  <div class="steps">
+    <div class="step frag"><div class="n">1</div><div><h3>El origen</h3><p>Nace con la <b>Escuela de Fráncfort</b> (Alemania, años treinta): un grupo de intelectuales que vio cómo la radio y el cine se convertían en instrumentos de la propaganda nazi, y que terminó exiliado por ello.</p></div></div>
+    <div class="step frag"><div class="n">2</div><div><h3>La idea de fondo</h3><p>Los medios no son neutrales ni están fuera de la sociedad: son empresas e instituciones insertas en <b>relaciones de poder</b>. Lo que emiten no son solo mensajes: son una <b>visión del mundo</b> —ideología— presentada como si fuera natural.</p></div></div>
+    <div class="step frag"><div class="n">3</div><div><h3>Por qué «estructuralista»</h3><p>Porque mira la <b>estructura</b> detrás del mensaje: quién es dueño del medio, quién lo financia, qué contenidos se repiten y cuáles nunca aparecen. El mensaje suelto importa menos que el sistema que lo produce.</p></div></div>
+    <div class="step frag"><div class="n">4</div><div><h3>Su manera de preguntar</h3><p>La pregunta crítica no es «¿funciona?», sino <b>«¿a quién beneficia que funcione así?»</b> y «¿qué hace pasar por normal?». Con esa sospecha se lee la pieza que sigue.</p></div></div>
+  </div>
+</section>
+
+<!-- 10 · LA SOSPECHA CRÍTICA -->
 <section class="screen compact" data-title="La sospecha crítica">
   <div class="eyebrow">05 · El enfoque crítico-estructuralista</div>
   <h2>La sospecha crítica: otra pieza, otra mirada</h2>
