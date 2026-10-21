@@ -179,11 +179,24 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 /* Fuentes: calma total */
 .screen.active[data-motion="calm"] > *{animation-name:fadeSlow;animation-duration:.95s}
 .screen.active[data-motion="calm"] .frag{animation-name:fadeSlow;animation-duration:.95s}
+.lbl-short{display:none}
 @media (max-width:760px){
   .split,.versus,.cards{grid-template-columns:1fr}
   .split img.side{height:30vh}
   .screen{padding:74px 5vw 110px}
   #hint{display:none}
+  /* Barra de navegación móvil: fija, sólida y con botones grandes */
+  #topbar{padding:12px 16px}
+  #folio{white-space:nowrap;font-size:.95rem}
+  .brand{font-size:.78rem;max-width:55%}
+  #controls{background:rgba(12,9,7,.96);border-top:1px solid var(--line);padding:10px 12px calc(10px + env(safe-area-inset-bottom));gap:10px}
+  #controls{flex-wrap:nowrap}
+  #navBtns{display:flex;gap:10px;flex:2}
+  #controls .ctrl{flex:1;text-align:center;padding:14px 6px;font-size:.95rem}
+  .lbl-long{display:none}
+  .lbl-short{display:inline}
+  .caption{bottom:88px}
+  .screen.photo .photo-inner{padding-bottom:172px}
 }
 .screen.pieza1 .split img.side{height:44vh}
 .screen.pieza1 blockquote{padding:12px 18px}
@@ -495,8 +508,8 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 <div id="controls">
   <button class="ctrl" id="btnPrev">← Anterior</button>
   <div id="hint">Teclas ← → o Espacio para pasar · Pantalla completa con el botón o la tecla F</div>
-  <div style="display:flex;gap:10px;align-items:center">
-    <button class="ctrl" id="btnFull">⛶ Pantalla completa</button>
+  <div id="navBtns" style="display:flex;gap:10px;align-items:center">
+    <button class="ctrl" id="btnFull">⛶ <span class="lbl-long">Pantalla completa</span><span class="lbl-short">Completa</span></button>
     <button class="ctrl primary" id="btnNext">Siguiente →</button>
   </div>
 </div>
