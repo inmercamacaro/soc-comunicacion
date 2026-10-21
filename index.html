@@ -97,6 +97,9 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
   .screen{padding:74px 5vw 110px}
   #hint{display:none}
 }
+.screen.pieza1 .split img.side{height:44vh}
+.screen.pieza1 blockquote{padding:12px 18px}
+.screen.pieza1 .quotes{gap:10px}
 .screen.compact{padding-top:60px;padding-bottom:92px}
 .screen.compact .split img.side{height:29vh}
 .screen.compact .cards{margin-top:18px}
@@ -155,7 +158,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 </section>
 
 <!-- 03 · LA CAMPAÑA — PIEZA 1 -->
-<section class="screen" data-title="La campaña · Pieza 1">
+<section class="screen pieza1" data-title="La campaña · Pieza 1">
   <div class="eyebrow">01 · La campaña — Pieza 1</div>
   <h2>El discurso de victoria</h2>
   <div class="split">
@@ -402,7 +405,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 
 <div id="controls">
   <button class="ctrl" id="btnPrev">← Anterior</button>
-  <div id="hint">Espacio / clic en «Siguiente» para revelar paso a paso · F: pantalla completa</div>
+  <div id="hint">Flechas o botones para cambiar de pantalla · F: pantalla completa</div>
   <button class="ctrl primary" id="btnNext">Siguiente →</button>
 </div>
 
@@ -413,27 +416,22 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
   var bar=document.getElementById('progress');
   var cur=0;
   function frags(s){return [].slice.call(s.querySelectorAll('.frag'));}
-  function shown(s){return s.querySelectorAll('.frag.on').length;}
-  function totalSteps(){return screens.reduce(function(a,s){return a+1+frags(s).length;},0);}
-  function doneSteps(){var a=0;for(var i=0;i<cur;i++){a+=1+frags(screens[i]).length;}return a+shown(screens[cur]);}
   function render(){
-    screens.forEach(function(s,i){s.classList.toggle('active',i===cur);});
+    screens.forEach(function(s,i){
+      var active=i===cur;
+      s.classList.toggle('active',active);
+      frags(s).forEach(function(f,j){
+        if(active){ f.style.transitionDelay=(j*0.11)+'s'; f.classList.add('on'); }
+        else { f.style.transitionDelay='0s'; f.classList.remove('on'); }
+      });
+    });
     folio.textContent=String(cur+1).padStart(2,'0')+' / '+String(screens.length).padStart(2,'0');
-    bar.style.width=(doneSteps()/totalSteps()*100)+'%';
-    document.getElementById('btnPrev').style.visibility=cur===0&&shown(screens[0])===0?'hidden':'visible';
+    bar.style.width=((cur+1)/screens.length*100)+'%';
+    document.getElementById('btnPrev').style.visibility=cur===0?'hidden':'visible';
+    document.getElementById('btnNext').style.visibility=cur===screens.length-1?'hidden':'visible';
   }
-  function next(){
-    var s=screens[cur],f=frags(s),n=shown(s);
-    if(n<f.length){f[n].classList.add('on');}
-    else if(cur<screens.length-1){cur++;}
-    render();
-  }
-  function prev(){
-    var s=screens[cur],n=shown(s);
-    if(n>0){s.querySelectorAll('.frag.on')[n-1].classList.remove('on');}
-    else if(cur>0){cur--;var p=screens[cur],pf=frags(p);pf.forEach(function(x){x.classList.add('on');});}
-    render();
-  }
+  function next(){ if(cur<screens.length-1){cur++; render();} }
+  function prev(){ if(cur>0){cur--; render();} }
   document.getElementById('btnNext').addEventListener('click',next);
   document.getElementById('btnPrev').addEventListener('click',prev);
   document.addEventListener('keydown',function(e){
