@@ -136,6 +136,45 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01s !important;animation-delay:0s !important;transition-duration:.01s !important}
 }
+
+/* ===== IDENTIDAD DE MOVIMIENTO POR PANTALLA ===== */
+@keyframes slamIn{from{opacity:0;transform:scale(1.22)}to{opacity:1;transform:scale(1)}}
+@keyframes popIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+@keyframes dropIn{from{opacity:0;transform:translateY(-32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeSlow{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes buildIn{from{opacity:0;transform:translateY(18px) scale(.965)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes gridIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes zoomPunch{from{transform:scale(1.17)}to{transform:scale(1)}}
+@keyframes panSlow{from{transform:scale(1.12) translateX(-1.6%)}to{transform:scale(1.12) translateX(1.6%)}}
+/* Portada: cine — título y subtítulo con entradas amplias y tardías */
+.screen.active[data-motion="cover"] .photo-inner h1{animation:riseIn 1.15s cubic-bezier(.22,.8,.28,1) .35s both}
+.screen.active[data-motion="cover"] .photo-inner .lead{animation:riseIn 1s cubic-bezier(.22,.8,.28,1) .65s both}
+.screen.active[data-motion="cover"] .photo-inner .eyebrow{animation:fadeSlow 1.2s ease .15s both}
+/* Ruta: los pasos entran como un camino, desde la izquierda */
+.screen.active[data-motion="route"] .frag{animation-name:slideL;animation-duration:.6s}
+/* Pieza 1: foto con golpe seco; las citas entran como titulares, desde la derecha */
+.screen.active[data-motion="punch"] .frag{animation-name:slideR;animation-duration:.55s}
+.screen.active[data-motion="punch"] img.side{animation-name:zoomPunch;animation-duration:.95s}
+/* Pieza 2: los eslóganes caen como carteles pegados en un muro */
+.screen.active[data-motion="slam"] .frag{animation-name:slamIn;animation-duration:.5s;animation-timing-function:cubic-bezier(.2,.9,.25,1.12)}
+/* Teoría funcionalista: las piezas se ensamblan como un esquema */
+.screen.active[data-motion="build"] .frag{animation-name:buildIn;animation-duration:.8s}
+/* Fórmula: la cadena se arma eslabón a eslabón desde la derecha */
+.screen.active[data-motion="chain"] .frag{animation-name:slideR;animation-duration:.5s}
+/* Wright: las funciones aparecen en oleada */
+.screen.active[data-motion="grid"] .frag{animation-name:gridIn;animation-duration:.7s}
+/* Descubre: el hecho cae con peso; las opciones suben en orden */
+.screen.active[data-motion="quiz"] .quiz .fact{animation:dropIn .6s cubic-bezier(.22,.8,.28,1) .3s both}
+/* Teoría crítica: entrada lenta y grave, sin brincos */
+.screen.active[data-motion="grave"] .frag{animation-name:fadeSlow;animation-duration:1.05s;animation-timing-function:ease}
+/* Sospecha crítica: la foto respira en paneo continuo; las tarjetas suben pesadas */
+.screen.active[data-motion="drama"] img.side{animation:panSlow 22s ease-in-out infinite alternate}
+.screen.active[data-motion="drama"] .frag{animation-duration:.95s}
+/* Síntesis: cada idea hace «pop» */
+.screen.active[data-motion="pop"] .frag{animation-name:popIn;animation-duration:.6s;animation-timing-function:cubic-bezier(.34,1.45,.64,1)}
+/* Fuentes: calma total */
+.screen.active[data-motion="calm"] > *{animation-name:fadeSlow;animation-duration:.95s}
+.screen.active[data-motion="calm"] .frag{animation-name:fadeSlow;animation-duration:.95s}
 @media (max-width:760px){
   .split,.versus,.cards{grid-template-columns:1fr}
   .split img.side{height:30vh}
@@ -175,7 +214,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 <div id="topbar"><div class="brand">Sociología de la Comunicación</div><div id="folio">01 / 12</div></div>
 
 <!-- 01 · PORTADA -->
-<section class="screen photo active" data-title="Portada">
+<section class="screen photo active" data-motion="cover" data-title="Portada">
   <img class="bg" src="assets/portada-multitud.jpg" alt="Multitud frente al Palacio Nacional iluminado, noche del 4 de febrero de 2024" style="object-position:center 38%">
   <div class="scrim"></div>
   <div class="photo-inner">
@@ -187,7 +226,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 </section>
 
 <!-- 02 · RUTA -->
-<section class="screen" data-title="Ruta">
+<section class="screen" data-motion="route" data-title="Ruta">
   <div class="eyebrow">Ruta de la sesión</div>
   <h2>Ocho paradas, dos maneras de mirar</h2>
   <div class="route">
@@ -203,7 +242,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 </section>
 
 <!-- 03 · LA CAMPAÑA — PIEZA 1 -->
-<section class="screen pieza1" data-title="La campaña · Pieza 1">
+<section class="screen pieza1" data-motion="punch" data-title="La campaña · Pieza 1">
   <div class="eyebrow">01 · La campaña — Pieza 1</div>
   <h2>El discurso de victoria</h2>
   <div class="split">
@@ -221,7 +260,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 </section>
 
 <!-- 04 · LA CAMPAÑA — PIEZA 2 -->
-<section class="screen" data-title="La campaña · Pieza 2">
+<section class="screen" data-motion="slam" data-title="La campaña · Pieza 2">
   <div class="eyebrow">01 · La campaña — Pieza 2</div>
   <h2>Tres frases que hicieron el trabajo</h2>
   <div class="split">
@@ -235,7 +274,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 </section>
 
 <!-- 05 · EL FUNCIONALISMO — DE QUÉ TRATA -->
-<section class="screen" data-title="El funcionalismo · de qué trata">
+<section class="screen" data-motion="build" data-title="El funcionalismo · de qué trata">
   <div class="eyebrow">02 · El funcionalismo</div>
   <h2>La comunicación como engranaje del sistema</h2>
   <div class="steps">
@@ -247,7 +286,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 </section>
 
 <!-- 06 · LASSWELL -->
-<section class="screen" data-title="La fórmula de Lasswell">
+<section class="screen" data-motion="chain" data-title="La fórmula de Lasswell">
   <div class="eyebrow">02 · El funcionalismo — Lasswell (1948)</div>
   <h2>La fórmula se construye pregunta a pregunta</h2>
   <div class="steps">
@@ -260,7 +299,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 </section>
 
 <!-- 06 · DESCUBRE — LASSWELL -->
-<section class="screen" data-title="Descubre · Lasswell">
+<section class="screen" data-motion="quiz" data-title="Descubre · Lasswell">
   <div class="eyebrow">03 · Descubre</div>
   <h2>¿Qué pregunta de Lasswell responde esto?</h2>
   <div class="quiz" data-quiz>
@@ -275,7 +314,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
   </div>
 </section>
 
-<section class="screen" data-title="Descubre · Lasswell">
+<section class="screen" data-motion="quiz" data-title="Descubre · Lasswell">
   <div class="eyebrow">03 · Descubre</div>
   <h2>¿Qué pregunta de Lasswell responde esto?</h2>
   <div class="quiz" data-quiz>
@@ -290,7 +329,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
   </div>
 </section>
 
-<section class="screen" data-title="Descubre · Lasswell">
+<section class="screen" data-motion="quiz" data-title="Descubre · Lasswell">
   <div class="eyebrow">03 · Descubre</div>
   <h2>¿Qué pregunta de Lasswell responde esto?</h2>
   <div class="quiz" data-quiz>
@@ -306,7 +345,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 </section>
 
 <!-- 07 · WRIGHT -->
-<section class="screen" data-title="Las funciones de Wright">
+<section class="screen" data-motion="grid" data-title="Las funciones de Wright">
   <div class="eyebrow">04 · El funcionalismo — Wright (1960)</div>
   <h2>¿Para qué sirve comunicar en masa?</h2>
   <div class="steps">
@@ -318,7 +357,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 </section>
 
 <!-- 09 · EL ENFOQUE CRÍTICO — DE QUÉ TRATA -->
-<section class="screen" data-title="El enfoque crítico · de qué trata">
+<section class="screen" data-motion="grave" data-title="El enfoque crítico · de qué trata">
   <div class="eyebrow">05 · El enfoque crítico-estructuralista</div>
   <h2>Los medios no flotan sobre la sociedad</h2>
   <div class="steps">
@@ -330,7 +369,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 </section>
 
 <!-- 10 · LA SOSPECHA CRÍTICA -->
-<section class="screen compact" data-title="La sospecha crítica">
+<section class="screen compact" data-motion="drama" data-title="La sospecha crítica">
   <div class="eyebrow">05 · El enfoque crítico-estructuralista</div>
   <h2>La sospecha crítica: otra pieza, otra mirada</h2>
   <div class="split">
@@ -347,7 +386,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 </section>
 
 <!-- 09 · DESCUBRE — ¿CUÁL SÍ, CUÁL NO? -->
-<section class="screen" data-title="Descubre · ¿cuál sí, cuál no?">
+<section class="screen" data-motion="quiz" data-title="Descubre · ¿cuál sí, cuál no?">
   <div class="eyebrow">06 · Descubre</div>
   <h2>¿Cuál sí, cuál no? Funcionalismo o crítica</h2>
   <div class="quiz" data-quiz>
@@ -361,7 +400,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
   </div>
 </section>
 
-<section class="screen" data-title="Descubre · ¿cuál sí, cuál no?">
+<section class="screen" data-motion="quiz" data-title="Descubre · ¿cuál sí, cuál no?">
   <div class="eyebrow">06 · Descubre</div>
   <h2>¿Cuál sí, cuál no? Funcionalismo o crítica</h2>
   <div class="quiz" data-quiz>
@@ -375,7 +414,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
   </div>
 </section>
 
-<section class="screen" data-title="Descubre · ¿cuál sí, cuál no?">
+<section class="screen" data-motion="quiz" data-title="Descubre · ¿cuál sí, cuál no?">
   <div class="eyebrow">06 · Descubre</div>
   <h2>¿Cuál sí, cuál no? Funcionalismo o crítica</h2>
   <div class="quiz" data-quiz>
@@ -389,7 +428,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
   </div>
 </section>
 
-<section class="screen" data-title="Descubre · ¿cuál sí, cuál no?">
+<section class="screen" data-motion="quiz" data-title="Descubre · ¿cuál sí, cuál no?">
   <div class="eyebrow">06 · Descubre</div>
   <h2>¿Cuál sí, cuál no? Funcionalismo o crítica</h2>
   <div class="quiz" data-quiz>
@@ -404,7 +443,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 </section>
 
 <!-- 10 · EL CONTRASTE -->
-<section class="screen" data-title="El contraste">
+<section class="screen" data-motion="versus" data-title="El contraste">
   <div class="eyebrow">07 · El contraste</div>
   <h2>Las mismas piezas, dos verdades distintas</h2>
   <div class="versus">
@@ -424,7 +463,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 </section>
 
 <!-- 11 · SÍNTESIS -->
-<section class="screen" data-title="Síntesis">
+<section class="screen" data-motion="pop" data-title="Síntesis">
   <div class="eyebrow">08 · Síntesis</div>
   <h2>Tres ideas para llevarse</h2>
   <div class="synth">
@@ -435,7 +474,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 </section>
 
 <!-- 12 · FUENTES -->
-<section class="screen" data-title="Fuentes">
+<section class="screen" data-motion="calm" data-title="Fuentes">
   <div class="eyebrow">Fuentes</div>
   <h2>Referencias para continuar</h2>
   <div class="sources">
