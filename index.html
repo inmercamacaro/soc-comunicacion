@@ -121,7 +121,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 .screen.active .frag:nth-child(7){animation-delay:1.06s}
 .screen.active .frag:nth-child(8){animation-delay:1.18s}
 .screen.active img.side{animation:photoSettle 1.5s cubic-bezier(.22,.8,.28,1) both}
-.screen.photo.active img.bg{animation:kenburns 26s ease-in-out infinite alternate}
+.screen.photo.active img.bg{animation:photoSettle 1.8s cubic-bezier(.22,.8,.28,1) both}
 .screen.active .versus .vcol:first-child{animation:slideL .8s cubic-bezier(.22,.8,.28,1) .35s both}
 .screen.active .versus .vcol:last-child{animation:slideR .8s cubic-bezier(.22,.8,.28,1) .5s both}
 .screen.active .split img.side{animation-delay:.15s}
@@ -168,7 +168,7 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 /* Teoría crítica: entrada lenta y grave, sin brincos */
 .screen.active[data-motion="grave"] .frag{animation-name:fadeSlow;animation-duration:1.05s;animation-timing-function:ease}
 /* Sospecha crítica: la foto respira en paneo continuo; las tarjetas suben pesadas */
-.screen.active[data-motion="drama"] img.side{animation:panSlow 22s ease-in-out infinite alternate}
+.screen.active[data-motion="drama"] img.side{animation:photoSettle 2s cubic-bezier(.22,.8,.28,1) both}
 .screen.active[data-motion="drama"] .frag{animation-duration:.95s}
 /* Síntesis: cada idea hace «pop» */
 .screen.active[data-motion="pop"] .frag{animation-name:popIn;animation-duration:.6s;animation-timing-function:cubic-bezier(.34,1.45,.64,1)}
@@ -489,8 +489,11 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
 
 <div id="controls">
   <button class="ctrl" id="btnPrev">← Anterior</button>
-  <div id="hint">Flechas o botones para cambiar de pantalla · F: pantalla completa</div>
-  <button class="ctrl primary" id="btnNext">Siguiente →</button>
+  <div id="hint">Teclas ← → o Espacio para pasar · Pantalla completa con el botón o la tecla F</div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <button class="ctrl" id="btnFull">⛶ Pantalla completa</button>
+    <button class="ctrl primary" id="btnNext">Siguiente →</button>
+  </div>
 </div>
 
 <script>
@@ -509,12 +512,19 @@ blockquote{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.8rem);font-w
   }
   function next(){ if(cur<screens.length-1){cur++; render();} }
   function prev(){ if(cur>0){cur--; render();} }
-  document.getElementById('btnNext').addEventListener('click',next);
-  document.getElementById('btnPrev').addEventListener('click',prev);
+  function toggleFull(){
+    if(document.fullscreenElement){ document.exitFullscreen(); }
+    else if(document.documentElement.requestFullscreen){ document.documentElement.requestFullscreen().catch(function(){}); }
+  }
+  document.getElementById('btnNext').addEventListener('click',function(){ next(); this.blur(); });
+  document.getElementById('btnPrev').addEventListener('click',function(){ prev(); this.blur(); });
+  document.getElementById('btnFull').addEventListener('click',function(){ toggleFull(); this.blur(); });
   document.addEventListener('keydown',function(e){
     if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next();}
     else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev();}
-    else if(e.key==='f'||e.key==='F'){if(document.fullscreenElement){document.exitFullscreen();}else{document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}}
+    else if(e.key==='Home'){e.preventDefault();cur=0;render();}
+    else if(e.key==='End'){e.preventDefault();cur=screens.length-1;render();}
+    else if(e.key==='f'||e.key==='F'){toggleFull();}
   });
   document.querySelectorAll('[data-quiz]').forEach(function(q){
     var fb=q.querySelector('.feedback');
